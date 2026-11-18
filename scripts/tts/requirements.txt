@@ -1,0 +1,4 @@
+# Kokoro TTS (Apache-2.0 model weights). Also requires the system package espeak-ng.
+# Install into a virtualenv:  python3 -m venv .venv && .venv/bin/pip install -r scripts/tts/requirements.txt
+kokoro>=0.9.4
+soundfile>=0.12

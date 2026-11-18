@@ -1,0 +1,65 @@
+# --- Dependencies ---
+node_modules/
+.pnp.*
+
+# --- Remotion / build output ---
+out/
+build/
+dist/
+.remotion/
+
+# --- Renders (large; keep out of git) ---
+renders/*
+!renders/.gitkeep
+!renders/README.md
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.prores
+# Allow small, deliberately committed reference clips if ever needed:
+# !episodes/**/reference/*.mp4
+
+# --- Generated narration / intermediate audio ---
+public/narration/**/*.wav
+public/narration/**/*.mp3
+episodes/*/audio/**/*.wav
+episodes/*/audio/**/raw/
+*.tmp.wav
+*.tmp.mp3
+
+# --- Python (TTS tooling) ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+.python-version
+
+# --- Temporary files ---
+tmp/
+temp/
+*.tmp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*~
+
+# --- Claude Code local settings ---
+.claude/settings.local.json

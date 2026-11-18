@@ -1,0 +1,12 @@
+{
+  "id": "<series>-<NN>-<slug>",
+  "series": "retested | unspoken-patterns",
+  "workingTitle": "",
+  "status": "stage-1-pending",
+  "approvals": {
+    "stage1Script": { "approved": false, "approvedBy": "", "date": "", "scriptVersion": "" },
+    "stage2Prototype": { "approved": false, "approvedBy": "", "date": "", "notes": "" },
+    "stage3Final": { "approved": false, "approvedBy": "", "date": "", "renderFile": "" }
+  },
+  "narration": { "engine": "kokoro", "voice": "", "lang": "", "speed": 1.0 }
+}

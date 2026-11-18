@@ -1,0 +1,36 @@
+{
+  "name": "why-humans",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WHY HUMANS — production repository for an animated, research-based psychology education channel (Remotion + SVG).",
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "studio": "remotion studio",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src && tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "compositions": "remotion compositions",
+    "render": "remotion render",
+    "render:placeholder": "remotion render Placeholder renders/placeholder.mp4",
+    "still:placeholder": "remotion still Placeholder renders/placeholder.png --frame=60",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.540",
+    "react": "19.2.9",
+    "react-dom": "19.2.9",
+    "remotion": "4.0.540"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.540",
+    "@types/react": "19.2.18",
+    "eslint": "9.39.5",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  }
+}
