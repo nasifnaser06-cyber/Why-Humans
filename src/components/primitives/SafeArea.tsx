@@ -1,18 +1,27 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { layout } from "../../design/tokens";
+import { useFrameLayout } from "../../design/layout";
 
-/** Constrains children to the title-safe area of the frame. */
+/**
+ * Constrains children to the safe area of the current format
+ * (16:9 title-safe, or the 9:16 Shorts safe zone).
+ */
 export const SafeArea: React.FC<{
   children: React.ReactNode;
   style?: React.CSSProperties;
-}> = ({ children, style }) => (
-  <AbsoluteFill
-    style={{
-      padding: `${layout.titleSafe.y}px ${layout.titleSafe.x}px`,
-      ...style,
-    }}
-  >
-    {children}
-  </AbsoluteFill>
-);
+}> = ({ children, style }) => {
+  const { safe } = useFrameLayout();
+  return (
+    <AbsoluteFill
+      style={{
+        paddingTop: safe.top,
+        paddingRight: safe.right,
+        paddingBottom: safe.bottom,
+        paddingLeft: safe.left,
+        ...style,
+      }}
+    >
+      {children}
+    </AbsoluteFill>
+  );
+};

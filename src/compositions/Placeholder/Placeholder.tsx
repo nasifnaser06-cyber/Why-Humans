@@ -4,6 +4,7 @@ import { Backdrop, DrawPath, FadeIn, PopIn, SafeArea } from "../../components";
 import { colors, layout, space, typography } from "../../design/tokens";
 import { fadeInOut } from "../../animation";
 import { SERIES } from "../../series";
+import { useFrameLayout } from "../../design/layout";
 
 /**
  * Technical placeholder used only to verify the toolchain renders.
@@ -12,6 +13,7 @@ import { SERIES } from "../../series";
 export const Placeholder: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames, width, height } = useVideoConfig();
+  const { safe, unit } = useFrameLayout();
   const opacity = fadeInOut(frame, 0, durationInFrames, 12, 15);
 
   const cx = width / 2;
@@ -55,7 +57,8 @@ export const Placeholder: React.FC = () => {
         style={{
           justifyContent: "flex-end",
           alignItems: "center",
-          paddingBottom: 220,
+          // 220 px in 16:9; never inside the 9:16 Shorts UI zone.
+          paddingBottom: Math.max(safe.bottom, 220 * unit),
           fontFamily: typography.family.display,
           color: colors.text.primary,
           textAlign: "center",
@@ -85,7 +88,15 @@ export const Placeholder: React.FC = () => {
             Pipeline test · placeholder · not episode content
           </div>
         </FadeIn>
-        <div style={{ display: "flex", gap: space.md, marginTop: space.lg }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: space.md,
+            marginTop: space.lg,
+          }}
+        >
           {Object.values(SERIES).map((s, i) => (
             <PopIn key={s.id} delay={64 + i * 6} preset="snappy">
               <div

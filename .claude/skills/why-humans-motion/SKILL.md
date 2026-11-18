@@ -38,7 +38,10 @@ significant redesign needs the user's approval.
 | Neutral grey           | `#AAA69D` |
 | Card background        | `#FFFDF8` |
 
-Use these through `src/design/tokens.ts`, never as literals in components.
+This is a **reference palette**. `src/design/tokens.ts` still holds the
+earlier provisional values and is intentionally not replaced yet; the palette
+moves into the tokens only when the user approves a Stage 2 direction. Either
+way, components use tokens, never colour literals.
 
 **Characters.** Sam and Quinn are approved only for the RETESTED Episode 02
 (Stanford Prison Experiment) production approach. They are not channel
@@ -55,6 +58,12 @@ specific approved reason. Other human figures must be original designs.
 **Identity goal.** An original WHY HUMANS look. Comparable craft to the best
 educational studios, never a similar look to any of them.
 
+**Creative ambition.** Rigorous _and_ cinematic, visually imaginative,
+emotionally compelling and original. The rules below limit what is
+_claimed_, not how boldly it is _shown_. When a rule seems to block a strong
+idea, look for the version that keeps the idea and stays honest before
+dropping it.
+
 ## 2. Scientific animation principles
 
 - **Motion explains.** Every movement should show a mechanism, a comparison,
@@ -63,18 +72,28 @@ educational studios, never a similar look to any of them.
   crowd as dots) must be visibly distinct from depictions of actual data or
   procedure. Mark schematic diagrams as schematic; give real data an axis, a
   unit and a source line.
-- **Never fabricate.** No invented results, effect sizes, sample sizes,
-  percentages, curves, p-values or chart values. "Illustrative" data that a
-  viewer could mistake for a result is not allowed. Every number on screen
-  maps to a row in `claims.md`.
+- **Never fabricate findings.** No invented results, effect sizes, sample
+  sizes, percentages, curves, p-values or chart values. "Illustrative" data
+  that a viewer could mistake for a result is not allowed. Every research
+  number on screen maps to a row in `claims.md`.
+- **Fiction is fine when it reads as fiction.** Story-world examples (a
+  character's exam scores of 80, 95 and 98, a fictional price tag, a day in
+  someone's life) are allowed. Keep them in the story's visual language
+  (on a character's paper, in a scene, handwritten) and out of the language
+  reserved for findings (sourced charts, citation lines, study labels). Never
+  present them as a study's result.
 - **No numeric motion that lies.** Never flash, scramble or "decode" digits
   for scientific values; every intermediate frame could be read as a claim.
   A count-up is allowed only from 0 (or the stated baseline) to the sourced
   value, with the final value held long enough to read.
-- **Correlation stays correlation.** For correlational findings avoid
-  arrows, pushes, chains, dominoes or one object transforming _into_
-  another. Prefer co-occurrence: two things appearing together, a scatter, a
-  shared highlight.
+- **Imagination is welcome; false mechanisms are not.** Surreal metaphors,
+  impossible spaces and objects morphing are encouraged. The limit: a visual
+  must not present a correlational finding as an established causal
+  mechanism, or a hypothesis as settled. When the finding is correlational,
+  avoid visuals whose meaning is "A makes B happen" (A pushing, driving or
+  turning into B, domino chains, cause arrows) and prefer co-occurrence (two
+  things rising together, a scatter, a shared highlight), or label the link
+  as an association or an open question.
 - **Show the strength of evidence.** Small, contested or non-replicated
   effects look small and uncertain, not dramatic. Show confidence intervals,
   error bars or sample size when the script mentions them. Bars start at zero
@@ -106,8 +125,9 @@ educational studios, never a similar look to any of them.
   rather than an inline bezier.
 - **Meaningful transformations.** When an idea becomes another idea, let
   one object change into the next (a shape becomes a chart axis, a crowd
-  becomes a bar) instead of cutting, so the link is visible. Never do this
-  for correlational links (§2).
+  becomes a bar) instead of cutting, so the link is visible. Imaginative
+  and surreal transformations are welcome; just don't let a transformation
+  imply a causal mechanism the evidence doesn't support (§2).
 - **Anticipation and follow-through.** Small counter-move before large
   actions (3–6 frames); slight settle after (`springs.lively` for figures
   and icons, `springs.smooth` for text and charts — text never bounces).
@@ -136,13 +156,17 @@ educational studios, never a similar look to any of them.
 
 ### 4.2 Resolution awareness
 
-- Never hard-code `1920`, `1080`, or fixed pixel positions for layout. Read
-  `width`, `height` and `fps` from `useVideoConfig()`.
-- Scale sizes from the short side: `const u = Math.min(width, height) / 1080`
-  and multiply token sizes by `u`, so a 40 px body size stays 40 px in both
-  formats.
-- Position with fractions of `width`/`height` or flex layout, not absolute
-  numbers. Branch on `width < height` only where a layout genuinely differs.
+- Never hard-code `1920`, `1080`, or fixed pixel positions for layout. Use
+  `useFrameLayout()` (`src/design/layout.ts`), which returns `width`,
+  `height`, `fps`, `orientation`, `isPortrait`, `unit`, `safe`, `safeBox` and
+  `center` for the current composition.
+- Scale sizes by `unit` (short side ÷ 1080), so a 40 px body size stays
+  40 px in both formats.
+- Position with fractions of `width`/`height`, `safeBox`, or flex layout,
+  not absolute numbers. Branch on `isPortrait` only where a layout genuinely
+  differs.
+- Pick dimensions from `FORMATS.landscape` / `FORMATS.portrait`
+  (`src/config/video.ts`) when registering compositions.
 - Durations use `fps` (`seconds(n, fps)`), never assume 30.
 
 ### 4.3 Structure
@@ -161,7 +185,9 @@ educational studios, never a similar look to any of them.
 
 ### 4.4 Safe areas
 
-- **16:9:** keep text inside title-safe (`layout.titleSafe`, ~5% each side);
+- Wrap text layers in `<SafeArea>` (or use `useFrameLayout().safe`); the
+  insets come from `layout.safeArea` in the tokens.
+- **16:9:** keep text inside title-safe (~5% each side);
   keep the bottom-right clear in the last 20 s for end-screen elements.
 - **9:16 Shorts:** YouTube UI covers the bottom (caption, channel, audio) and
   the right edge (action buttons). Keep key text and faces in the central
