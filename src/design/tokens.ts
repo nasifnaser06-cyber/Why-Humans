@@ -90,13 +90,24 @@ export const space = {
 } as const;
 
 /**
- * Layout guides for a 1920×1080 frame.
- * Action-safe ≈ 93% and title-safe ≈ 90% (common broadcast convention);
- * YouTube overlays (progress bar, end screens) also cover the edges.
+ * Layout guides. Safe areas are fractions of the frame so they work in every
+ * format; resolve them to pixels with `useFrameLayout()` (src/design/layout.ts).
  */
 export const layout = {
-  actionSafe: { x: 67, y: 38 },
-  titleSafe: { x: 96, y: 54 },
+  safeArea: {
+    /**
+     * 16:9 title-safe: 5% on each side (common broadcast convention; YouTube's
+     * progress bar and end screens also cover the edges). At 1920×1080 this is
+     * 96 px left/right and 54 px top/bottom.
+     */
+    landscape: { top: 0.05, right: 0.05, bottom: 0.05, left: 0.05 },
+    /**
+     * 9:16 Shorts: YouTube's UI covers the bottom (title, channel, audio) and
+     * the right edge (action buttons). Approximate; verify against a current
+     * Shorts overlay before final render.
+     */
+    portrait: { top: 0.08, right: 0.15, bottom: 0.25, left: 0.06 },
+  },
   radius: { sm: 8, md: 16, lg: 32, pill: 999 },
   stroke: { hairline: 2, thin: 4, regular: 6, bold: 10 },
 } as const;

@@ -2,6 +2,23 @@
 
 Read this file before any work in this repository.
 
+## 0. Instruction priority and motion skill
+
+Before any Stage 2 or Stage 3 work (storyboards, prototypes, scenes,
+transitions, charts, sound, renders), load the project motion skill at
+`.claude/skills/why-humans-motion/SKILL.md`.
+
+When guidance conflicts, the higher item wins:
+
+1. Explicitly approved episode decisions and the scientific evidence.
+2. This `CLAUDE.md`.
+3. The WHY HUMANS motion skill (`.claude/skills/why-humans-motion/`).
+4. Relevant, compatible sections of synced skills.
+5. General creative recommendations.
+
+Report any conflict you cannot resolve. Never silently ignore a scientific or
+approval requirement.
+
 ## 1. Project identity
 
 **WHY HUMANS** is an English-language YouTube channel of research-based
@@ -19,6 +36,16 @@ Series:
 Ambition: sophisticated scientific storytelling and 2D animation quality
 comparable to leading educational animation studios, with a visual identity
 that is **entirely our own**.
+
+Creative ambition: WHY HUMANS must be scientifically rigorous **and**
+cinematic, visually imaginative, emotionally compelling and original. Rigour
+limits what we _claim_, not how imaginatively we _show_ it. Bold metaphors,
+surreal transformations, fictional scenarios and expressive camera work are
+encouraged, within the safeguards in §3.
+
+Current visual reference: paper and ink (see the motion skill). It is a
+starting point, not a locked direction; Stage 2 explores richer identities,
+and any significant visual redesign needs the user's approval.
 
 ## 2. Three-stage production workflow (mandatory)
 
@@ -55,6 +82,15 @@ Scientific accuracy takes priority over dramatic storytelling.
   show uncertainty (confidence intervals, error bars, sample size) when the
   script discusses it, and never fabricate or "illustrative" data that could
   be mistaken for real results. Clearly label schematic diagrams as schematic.
+- **Fictional storytelling examples are allowed** (e.g. a character's exam
+  scores of 80, 95 and 98) when they are clearly distinguishable from research
+  data: shown in the story world (a character's paper, a scene) rather than
+  in the visual language reserved for findings (sourced charts, citation
+  lines, study labels), and never presented as a study's result.
+- **Imaginative transformations and surreal metaphors are allowed** (objects
+  morphing, impossible spaces, abstract ideas given form), provided they do
+  not portray a correlational finding as an established causal mechanism, or
+  present a hypothesis as settled.
 - Depict research participants, clinical conditions and groups respectfully,
   without stereotypes.
 - For RETESTED, represent the original study fairly before presenting later
@@ -81,8 +117,13 @@ Scientific accuracy takes priority over dramatic storytelling.
 - **Stack:** Remotion 4 (pinned exact versions, all `remotion`/`@remotion/*`
   packages on the same version), React 19, TypeScript (strict), SVG for
   illustration, FFmpeg for media processing, Kokoro TTS for narration.
-- **Format:** 1920×1080, 30 fps, H.264, yuv420p, BT.709 (see
-  `src/config/video.ts` and `remotion.config.ts`).
+- **Formats** (see `src/config/video.ts` and `remotion.config.ts`), all
+  30 fps, H.264, yuv420p, BT.709:
+  - Full episodes: 1920×1080, 16:9 (the default).
+  - YouTube Shorts: 1080×1920, 9:16.
+- **Resolution awareness:** components read `width`/`height` from
+  `useVideoConfig()` or `useFrameLayout()` (`src/design/layout.ts`); never
+  hard-code frame dimensions.
 - **Determinism:** renders must be frame-deterministic. Drive all motion from
   `useCurrentFrame()`. No `Math.random()` (use `seededRandom`), no
   `Date.now()`, no CSS transitions/animations, no timers.
